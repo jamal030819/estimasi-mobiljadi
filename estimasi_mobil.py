@@ -1,21 +1,15 @@
 import pickle
 import streamlit as st
 import pandas as pd
-import locale
+
 
 model = pickle.load(open('estimasi_mobil.sav', 'rb'))
-
-# Set locale untuk Indonesia
-#locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
-
-#locale.setlocale(locale.LC_ALL, 'en_GB.UTF-8')
 
 # Load the data
 df = pd.read_csv('toyota.csv')
 
 # Menambahkan judul yang menarik
 st.markdown("<h1 style='text-align: center; color: #4CAF50;'>🚗 Estimasi Harga Mobil Toyota Bekas di Wilayah Inggris</h1>", unsafe_allow_html=True)
-
 
 # Additional option to filter by model
 unique_models = sorted(df['model'].unique())
@@ -97,18 +91,10 @@ if st.button('Estimasi Harga', disabled=button_disabled):
     # Membulatkan ke bawah (menghapus desimal)
     rounded_harga = int(predict)
     formatted_p = f"£{rounded_harga:,}"
-    formatted_rupiah = f"Rp{rounded_harga:,}"
-
-   # try:
-        #locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
-       # formatted_rupiah = locale.currency(predict * 19000, grouping=True, symbol=True)
-    #except (locale.Error, ValueError) as e:
-        #st.error("Terjadi kesalahan saat memformat mata uang: " + str(e))
-        #formatted_rupiah = f"{predict * 19000:,.0f} IDR"
-
+    
     # Format angka menjadi Rupiah
-    formatted_rupiah = locale.currency(predict*19000, grouping=True, symbol=True)
-   
+    formatted_rupiah = f"Rp{rounded_harga*19000:,}"
+    #formatted_rupiah = predict*19000
     #formatted_rupiah = format_currency(predict * 19000, 'IDR', locale='id_ID')
 
     st.markdown("<hr>", unsafe_allow_html=True)
