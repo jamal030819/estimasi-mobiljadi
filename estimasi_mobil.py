@@ -8,7 +8,7 @@ model = pickle.load(open('estimasi_mobil.sav', 'rb'))
 # Set locale untuk Indonesia
 #locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
 
-
+locale.setlocale(locale.LC_ALL, 'en_GB.UTF-8')
 
 # Load the data
 df = pd.read_csv('toyota.csv')
@@ -98,10 +98,18 @@ if st.button('Estimasi Harga', disabled=button_disabled):
     rounded_harga = int(predict)
     formatted_harga = f"£{rounded_harga:,}"
 
+    try:
+        locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
+        formatted_rupiah = locale.currency(predict * 19000, grouping=True, symbol=True)
+    except (locale.Error, ValueError) as e:
+        st.error("Terjadi kesalahan saat memformat mata uang: " + str(e))
+        formatted_rupiah = f"{predict * 19000:,.0f} IDR"
 
     # Format angka menjadi Rupiah
-    formatted_rupiah = locale.currency(predict*19000, grouping=True, symbol=True)
+    #formatted_rupiah = locale.currency(predict*19000, grouping=True, symbol=True)
    
+    #formatted_rupiah = format_currency(predict * 19000, 'IDR', locale='id_ID')
+
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown(f"<h2 style='text-align: center; color: #FF5733;'>Hasil Estimasi Harga</h2>", unsafe_allow_html=True)
     st.metric('Estimasi Harga Mobil Bekas dalam Ponds :', formatted_harga)
