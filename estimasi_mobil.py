@@ -6,7 +6,7 @@ import locale
 model = pickle.load(open('estimasi_mobil.sav', 'rb'))
 
 # Set locale untuk Indonesia
-locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
+#locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
 
 
 
