@@ -96,23 +96,24 @@ if st.button('Estimasi Harga', disabled=button_disabled):
     # Format hasil estimasi menjadi Pound Sterling
     # Membulatkan ke bawah (menghapus desimal)
     rounded_harga = int(predict)
-    formatted_harga = f"£{rounded_harga:,}"
+    formatted_p = f"£{rounded_harga:,}"
+    formatted_rupiah = f"Rp{rounded_harga:,}"
 
-    try:
+   # try:
         #locale.setlocale(locale.LC_ALL, 'id_ID.UTF-8')
-        formatted_rupiah = locale.currency(predict * 19000, grouping=True, symbol=True)
-    except (locale.Error, ValueError) as e:
-        st.error("Terjadi kesalahan saat memformat mata uang: " + str(e))
-        formatted_rupiah = f"{predict * 19000:,.0f} IDR"
+       # formatted_rupiah = locale.currency(predict * 19000, grouping=True, symbol=True)
+    #except (locale.Error, ValueError) as e:
+        #st.error("Terjadi kesalahan saat memformat mata uang: " + str(e))
+        #formatted_rupiah = f"{predict * 19000:,.0f} IDR"
 
     # Format angka menjadi Rupiah
-    #formatted_rupiah = locale.currency(predict*19000, grouping=True, symbol=True)
+    formatted_rupiah = locale.currency(predict*19000, grouping=True, symbol=True)
    
     #formatted_rupiah = format_currency(predict * 19000, 'IDR', locale='id_ID')
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown(f"<h2 style='text-align: center; color: #FF5733;'>Hasil Estimasi Harga</h2>", unsafe_allow_html=True)
-    st.metric('Estimasi Harga Mobil Bekas dalam Ponds :', formatted_harga)
+    st.metric('Estimasi Harga Mobil Bekas dalam Ponds :', formatted_p)
     st.metric('Estimasi Harga Mobil Bekas dalam IDR', formatted_rupiah)
    
 
